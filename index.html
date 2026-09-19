@@ -304,6 +304,26 @@
   .ref-meta{color:var(--ink-soft);font-size:13.5px;margin-top:4px;}
 
   /* contact section */
+  .copy-btn{
+  border:none;
+  background:transparent;
+  padding:2px 4px;
+  margin-left:4px;
+  font-size:15px;
+  color:var(--ink-soft);
+  cursor:pointer;
+  vertical-align:middle;
+  transition:color .15s ease, transform .15s ease;
+}
+
+.copy-btn:hover{
+  color:var(--accent);
+  transform:scale(1.1);
+}
+
+.copy-btn.copied{
+  color:var(--accent);
+}
   .contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:34px;}
   .contact-block h3{
     font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:0.02em;
@@ -671,7 +691,17 @@
         <h3>Get in touch</h3>
         <ul>
           <li>📍 Chattogram, Bangladesh</li>
-          <li>📧 <a href="mailto:pdnowshadahamed@gmail.com">pdnowshadahamed@gmail.com</a></li>
+         <li class="email-copy">
+  📧
+  <a href="mailto:pdnowshadahamed@gmail.com">pdnowshadahamed@gmail.com</a>
+  <button
+    type="button"
+    class="copy-btn"
+    onclick="copyEmail(this)"
+    title="Copy email"
+    aria-label="Copy email"
+  >📋</button>
+</li>
           <li>📱 <a href="tel:+8801833421250">+88 01833&#8209;421250</a> · <a href="https://wa.me/8801833421250" target="_blank" rel="noopener">WhatsApp</a></li>
           <li>🌐 <a href="https://nowshadahamed.github.io/" target="_blank" rel="noopener">nowshadahamed.github.io</a></li>
         </ul>
@@ -714,13 +744,31 @@
       <li><span class="mi-label">Email</span><a href="mailto:pdnowshadahamed@gmail.com">pdnowshadahamed@gmail.com</a></li>
       <li><span class="mi-label">Phone</span><a href="tel:+8801833421250">+88 01833&#8209;421250</a> · <a href="https://wa.me/8801833421250" target="_blank" rel="noopener">WhatsApp</a></li>
       <li><span class="mi-label">Loc.</span><span>15 No Enayet Bazer, 02 No Lane Jubilee Road, GPO-4000, PS: Kotowali, Chattogram, Bangladesh</span></li>
-      <li><span class="mi-label">Web</span><a href="https://nowshadahamed.github.io/" target="_blank" rel="noopener">nowshadahamed.github.io.com</a></li>
+      <li><span class="mi-label">Web</span><a href="https://nowshadahamed.github.io/" target="_blank" rel="noopener">nowshadahamed.github.io</a></li>
     </ul>
   </div>
 </div>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+  // Copy email
+function copyEmail(button) {
+  const email = 'pdnowshadahamed@gmail.com';
+
+  navigator.clipboard.writeText(email).then(() => {
+    button.textContent = '✓';
+    button.classList.add('copied');
+    button.title = 'Copied!';
+
+    setTimeout(() => {
+      button.textContent = '📋';
+      button.classList.remove('copied');
+      button.title = 'Copy email';
+    }, 1500);
+  }).catch(() => {
+    alert('Unable to copy email.');
+  });
+}
 
   // Dropdown menus (click to toggle, close on outside click / Escape)
   const dropdowns = document.querySelectorAll('[data-dropdown]');
