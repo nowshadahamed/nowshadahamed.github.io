@@ -420,7 +420,11 @@ footer a{
     nav.topbar{display:none;}
     .hero{-webkit-mask-image:none;mask-image:none;}
     section{break-inside:avoid;border-bottom:none;}
-    .cta-stack{display:none;}
+        .cta-stack{display:none;}
+  }
+  :root[data-theme="dark"] img[src*="simpleicons.org/github"],
+  :root[data-theme="dark"] img[src*="simpleicons.org/x/"]{
+    filter:invert(1);
   }
 </style>
 </head>
