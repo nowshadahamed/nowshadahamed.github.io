@@ -29,6 +29,16 @@
     --sans:'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --mono:'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
   }
+    :root[data-theme="dark"]{
+    --paper:#161B22;
+    --paper-2:#1E252E;
+    --ink:#EDEAE1;
+    --ink-soft:#9CA6AE;
+    --rule:#2F3742;
+    --accent:#6FA3D6;
+    --accent-soft:#233140;
+    --bronze:#C7A45C;
+  }
   *{box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
@@ -97,6 +107,13 @@
     font-size:13.5px;color:var(--on-dark-soft);padding:9px 12px;border-radius:2px;border-bottom:none;
   }
   .dropdown-menu a:hover{color:var(--on-dark);background:rgba(199,164,92,0.10);}
+    .theme-toggle{
+    flex:none;width:34px;height:34px;border-radius:50%;
+    background:none;border:1px solid rgba(199,164,92,0.35);
+    color:var(--on-dark);font-size:16px;line-height:1;
+    transition:background .15s ease;
+  }
+  .theme-toggle:hover{background:rgba(199,164,92,0.10);}
 
   @media (max-width:760px){
     .nav-links{display:none;}
@@ -444,6 +461,7 @@ footer a{
 
       <a href="#" data-open-contact>Contact</a>
     </div>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode">🌙</button>
   </div>
 </nav>
 
@@ -873,7 +891,20 @@ function copyEmail(button) {
   };
   window.addEventListener('scroll', setActive, { passive: true });
   setActive();
+    // Day / Night mode
+  const themeBtn = document.getElementById('theme-toggle');
+  const applyTheme = (t) => {
+    document.documentElement.setAttribute('data-theme', t);
+    themeBtn.textContent = t === 'dark' ? '☀️' : '🌙';
+  };
+  let savedTheme = null;
+  try { savedTheme = localStorage.getItem('theme'); } catch (e) {}
+  applyTheme(savedTheme || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  themeBtn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try { localStorage.setItem('theme', next); } catch (e) {}
+  });
 </script>
-
 </body>
 </html>
